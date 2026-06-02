@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Designer Pro | Front & Back</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;600;700;800;900&family=Roboto+Slab:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="left-panel">
+    <div class="brand-box">
+      <div class="brand-logo"><i class="fa-solid fa-id-card-clip"></i></div>
+      <div><h1>ID Studio</h1><p>Mbele, nyuma, camera, export</p></div>
+    </div>
+
+    <div class="section-box side-switch-box">
+      <h3><i class="fa-solid fa-repeat"></i> Upande wa Kitambulisho</h3>
+      <div class="side-tabs">
+        <button class="side-tab active" id="frontSideBtn" data-side="front"><i class="fa-solid fa-address-card"></i> Mbele</button>
+        <button class="side-tab" id="backSideBtn" data-side="back"><i class="fa-solid fa-id-card"></i> Nyuma</button>
+      </div>
+      <button class="btn btn-primary full" id="flipSideBtn"><i class="fa-solid fa-rotate"></i> Geuza Mbele/Nyuma</button>
+      <p class="hint center">Kila upande unatunzwa tofauti. Geuza kwenda nyuma udesign upande wa pili.</p>
+    </div>
+
+    <div class="section-box">
+      <h3><i class="fa-solid fa-layer-group"></i> Templates</h3>
+      <div class="template-grid" id="templateGrid"></div>
+      <button class="btn btn-secondary full" id="blankTemplateBtn"><i class="fa-regular fa-square"></i> Blank Card</button>
+    </div>
+
+    <div class="section-box">
+      <h3><i class="fa-solid fa-plus-circle"></i> Ongeza Vitu</h3>
+      <div class="tool-grid">
+        <button class="tool-btn" id="addText"><i class="fa-solid fa-font"></i><span>Text</span></button>
+        <button class="tool-btn" id="addHeading"><i class="fa-solid fa-heading"></i><span>Heading</span></button>
+        <button class="tool-btn" id="addRect"><i class="fa-regular fa-square"></i><span>Box</span></button>
+        <button class="tool-btn" id="addCircle"><i class="fa-regular fa-circle"></i><span>Circle</span></button>
+        <button class="tool-btn" id="addLine"><i class="fa-solid fa-minus"></i><span>Line</span></button>
+        <button class="tool-btn" id="addPhotoBox"><i class="fa-solid fa-user"></i><span>Passport Box</span></button>
+        <button class="tool-btn" id="addQR"><i class="fa-solid fa-qrcode"></i><span>QR Code</span></button>
+        <button class="tool-btn" id="addBarcode"><i class="fa-solid fa-barcode"></i><span>Barcode</span></button>
+      </div>
+    </div>
+
+    <div class="section-box">
+      <h3><i class="fa-solid fa-image"></i> Picha & Camera</h3>
+      <label class="upload-drop" for="imageUpload"><i class="fa-solid fa-cloud-arrow-up"></i><span>Upload logo/passport/photo</span><small>PNG, JPG, JPEG</small></label>
+      <input type="file" id="imageUpload" accept="image/*" hidden>
+      <button class="btn btn-primary full" id="openCamera"><i class="fa-solid fa-camera"></i> Fungua Camera / Camera ya Simu</button>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn mobile-only" id="toggleLeft"><i class="fa-solid fa-bars"></i></button>
+        <div><h2>ID Card Designer</h2><p>Design mbele na nyuma, drag, resize, rotate, export</p></div>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn btn-info" href="manual.html" target="_blank"><i class="fa-solid fa-book"></i> User Manual</a>
+        <a class="btn btn-info" href="video-guide.html" target="_blank"><i class="fa-solid fa-circle-play"></i> Video Guide</a>
+        <button class="btn btn-light" id="undoBtn"><i class="fa-solid fa-rotate-left"></i> Undo</button>
+        <button class="btn btn-light" id="redoBtn"><i class="fa-solid fa-rotate-right"></i> Redo</button>
+        <button class="btn btn-light" id="deleteBtn"><i class="fa-solid fa-trash"></i> Delete</button>
+        <button class="btn btn-success" id="saveJson"><i class="fa-solid fa-floppy-disk"></i> Save JSON</button>
+        <label class="btn btn-light file-btn"><i class="fa-solid fa-folder-open"></i> Load JSON<input type="file" id="loadJson" accept="application/json" hidden></label>
+        <button class="btn btn-warning" id="exportPng"><i class="fa-solid fa-file-image"></i> PNG</button>
+        <button class="btn btn-danger" id="exportPdf"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+      </div>
+    </header>
+
+    <section class="canvas-area">
+      <div class="canvas-toolbar">
+        <div class="size-controls"><label>Card Size</label><select id="cardSize"><option value="1011x638">CR80 Landscape 85.6mm × 54mm</option><option value="638x1011">CR80 Portrait 54mm × 85.6mm</option><option value="1050x675">Large Landscape</option><option value="675x1050">Large Portrait</option></select></div>
+        <div class="current-side-pill" id="currentSidePill"><i class="fa-solid fa-address-card"></i> Una-design: MBELE</div>
+        <div class="zoom-controls"><button class="icon-btn" id="zoomOut"><i class="fa-solid fa-magnifying-glass-minus"></i></button><span id="zoomLabel">100%</span><button class="icon-btn" id="zoomIn"><i class="fa-solid fa-magnifying-glass-plus"></i></button><button class="icon-btn" id="fitCanvas"><i class="fa-solid fa-expand"></i></button></div>
+      </div>
+      <div class="canvas-wrap" id="canvasWrap"><canvas id="idCanvas" width="1011" height="638"></canvas></div>
+    </section>
+  </main>
+
+  <aside class="right-panel">
+    <div class="section-box inspector">
+      <h3><i class="fa-solid fa-sliders"></i> Appearance Editor</h3><p class="hint">Chagua object yoyote kwenye card kisha edit hapa.</p>
+      <div class="form-group"><label>Text / QR / Barcode Value</label><textarea id="textValue" rows="3" placeholder="Andika text hapa"></textarea></div>
+      <div class="two-col"><div class="form-group"><label>Font</label><select id="fontFamily"><option value="Inter">Inter</option><option value="Poppins">Poppins</option><option value="Arial">Arial</option><option value="Times New Roman">Times New Roman</option><option value="Roboto Slab">Roboto Slab</option></select></div><div class="form-group"><label>Size</label><input type="number" id="fontSize" value="28" min="6" max="160"></div></div>
+      <div class="two-col"><div class="form-group"><label>Text/Stroke</label><input type="color" id="fillColor" value="#111827"></div><div class="form-group"><label>Background</label><input type="color" id="bgColor" value="#ffffff"></div></div>
+      <div class="two-col"><div class="form-group"><label>Opacity</label><input type="range" id="opacity" min="0" max="1" step="0.05" value="1"></div><div class="form-group"><label>Border</label><input type="number" id="strokeWidth" value="0" min="0" max="30"></div></div>
+      <div class="align-row"><button class="icon-btn" data-align="left"><i class="fa-solid fa-align-left"></i></button><button class="icon-btn" data-align="center"><i class="fa-solid fa-align-center"></i></button><button class="icon-btn" data-align="right"><i class="fa-solid fa-align-right"></i></button><button class="icon-btn" id="boldBtn"><i class="fa-solid fa-bold"></i></button><button class="icon-btn" id="italicBtn"><i class="fa-solid fa-italic"></i></button></div>
+      <hr><h3><i class="fa-solid fa-layer-group"></i> Layers</h3><div class="layer-actions"><button class="btn btn-light" id="bringFront"><i class="fa-solid fa-arrow-up"></i> Front</button><button class="btn btn-light" id="sendBack"><i class="fa-solid fa-arrow-down"></i> Back</button></div><div id="layersList" class="layers-list"></div>
+    </div>
+  </aside>
+</div>
+
+<div class="camera-modal" id="cameraModal"><div class="camera-card"><div class="camera-head"><h3><i class="fa-solid fa-camera"></i> Piga Passport Photo</h3><button class="icon-btn" id="closeCamera"><i class="fa-solid fa-xmark"></i></button></div><video id="cameraVideo" autoplay playsinline></video><div class="camera-actions"><button class="btn btn-primary" id="capturePhoto"><i class="fa-solid fa-camera-retro"></i> Capture</button><button class="btn btn-light" id="switchCamera"><i class="fa-solid fa-camera-rotate"></i> Badili Camera</button></div><p class="hint">Camera hufanya kazi kwenye localhost au website yenye HTTPS.</p></div></div>
+<div id="toast" class="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script src="assets/data/templates.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
